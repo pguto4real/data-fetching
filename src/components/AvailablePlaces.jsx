@@ -5,15 +5,26 @@ import { useEffect } from "react";
 export default function AvailablePlaces({ onSelectPlace }) {
   const [availablePlaces, setAvailablePlaces] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const fetchPlaces = async () => {
-      setIsFetching(true)
+      setIsFetching(true);
       console.log("\n34\n");
-      const response = await fetch("http://localhost:3000/places");
-      const resData = await response.json();
-      setAvailablePlaces(resData.places);
-      setIsFetching(false)
+      try {
+        const response = await fetch("http://localhost:3000/places");
+        const resData = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch places");
+        }
+
+        setAvailablePlaces(resData.places);
+      } catch (error) {
+        setError(error);
+      }
+
+      setIsFetching(false);
     };
     fetchPlaces();
   }, []);
