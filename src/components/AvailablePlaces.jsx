@@ -2,6 +2,7 @@ import { useState } from "react";
 import Places from "./Places.jsx";
 import { useEffect } from "react";
 import Error from "./Error.jsx";
+import { sortPlacesByDistance } from "../../../11 place picker/src/loc.js";
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [availablePlaces, setAvailablePlaces] = useState([]);
@@ -11,7 +12,7 @@ export default function AvailablePlaces({ onSelectPlace }) {
   useEffect(() => {
     const fetchPlaces = async () => {
       setIsFetching(true);
-      console.log("\n34\n");
+    
       try {
         const response = await fetch("http://localhost:3000/places");
         const resData = await response.json();
@@ -38,7 +39,6 @@ export default function AvailablePlaces({ onSelectPlace }) {
     };
     fetchPlaces();
   }, []);
-  console.log(error);
   if (error) {
     return <Error title={"An error occured"} message={error.message} />;
   }
