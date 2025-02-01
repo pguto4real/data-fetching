@@ -13,14 +13,21 @@ export default function AvailablePlaces({ onSelectPlace }) {
       setIsFetching(true);
       console.log("\n34\n");
       try {
-        const response = await fetch("http://localhost:300/places");
+        const response = await fetch("http://localhost:3000/places");
         const resData = await response.json();
 
         if (!response.ok) {
           throw new Error("Failed to fettch places");
         }
-
-        setAvailablePlaces(resData.places);
+        navigator.geolocation.getCurrentPosition((position) => {
+          const sortedPlaces = sortPlacesByDistance(
+            resData.places,
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          setAvailablePlaces(sortedPlaces);
+        });
+        // setAvailablePlaces(resData.places);
       } catch (error) {
         setError({
           message: "Could not find places, please try again later",
