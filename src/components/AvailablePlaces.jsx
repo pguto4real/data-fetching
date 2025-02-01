@@ -17,21 +17,23 @@ export default function AvailablePlaces({ onSelectPlace }) {
         const resData = await response.json();
 
         if (!response.ok) {
-          throw new Error("Failed to fetch places");
+          throw new Error("Failed to fettch places");
         }
 
         setAvailablePlaces(resData.places);
       } catch (error) {
-        setError(error);
+        setError({
+          message: "Could not find places, please try again later",
+        });
       }
 
       setIsFetching(false);
     };
     fetchPlaces();
   }, []);
-console.log(error)
+  console.log(error);
   if (error) {
-    return <Error title={"an error occured"} message={error.message} />;
+    return <Error title={"An error occured"} message={error.message} />;
   }
   return (
     <Places
