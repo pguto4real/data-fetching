@@ -12,7 +12,7 @@ export default function AvailablePlaces({ onSelectPlace }) {
   useEffect(() => {
     const fetchPlaces = async () => {
       setIsFetching(true);
-    
+
       try {
         const response = await fetch("http://localhost:3000/places");
         const resData = await response.json();
@@ -27,6 +27,7 @@ export default function AvailablePlaces({ onSelectPlace }) {
             position.coords.longitude
           );
           setAvailablePlaces(sortedPlaces);
+          setIsFetching(false);
         });
         // setAvailablePlaces(resData.places);
       } catch (error) {
