@@ -24,3 +24,4 @@ export async function updateUserPlaces(places) {
 
   return resData.message;
 }
+

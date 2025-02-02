@@ -45,27 +45,41 @@ function App() {
     }
   }
 
-  const handleRemovePlace = useCallback(async function handleRemovePlace() {
-    setUserPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id)
-    );
-
-    setModalIsOpen(false);
-  }, []);
-console.log(errorUpdatingPlaces)
-function handleError() {
-  setErrorUpdatingPlaces(null);
-}
+  const handleRemovePlace = useCallback(
+    async function handleRemovePlace() {
+      setUserPlaces((prevPickedPlaces) =>
+        prevPickedPlaces.filter(
+          (place) => place.id !== selectedPlace.current.id
+        )
+      );
+      try {
+        await updateUserPlaces(
+          userPlaces.filter((place) => place.id !== selectedPlace.current.id)
+        );
+      } catch (error) {
+        setUserPlaces(userPlaces);
+        setErrorUpdatingPlaces({
+          message: "Failed to delete place.",
+        });
+      }
+      setModalIsOpen(false);
+    },
+    [userPlaces]
+  );
+  console.log(errorUpdatingPlaces);
+  function handleError() {
+    setErrorUpdatingPlaces(null);
+  }
   return (
     <>
-      <Modal open={errorUpdatingPlaces}>
-        return{" "}
-        <Error
-          title={"An error occured"}
-          message={errorUpdatingPlaces.message}
-          onConfirm={handleError}
-        />
-        ;
+      <Modal open={errorUpdatingPlaces} onClose={handleError}>
+        {errorUpdatingPlaces && (
+          <Error
+            title={"An error occured"}
+            message={errorUpdatingPlaces.message}
+            onConfirm={handleError}
+          />
+        )}
       </Modal>
       <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
