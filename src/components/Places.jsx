@@ -6,7 +6,6 @@ export default function Places({
   isLoading,
   loadingText,
 }) {
- 
   return (
     <section className="places-category">
       <h2>{title}</h2>

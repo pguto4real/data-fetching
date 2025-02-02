@@ -25,7 +25,6 @@ export default function AvailablePlaces({ onSelectPlace }) {
           setAvailablePlaces(sortedPlaces);
           setIsFetching(false);
         });
-        // setAvailablePlaces(resData.places);
       } catch (error) {
         setError({
           message: "Could not find places, please try again later",

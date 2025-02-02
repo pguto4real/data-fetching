@@ -20,13 +20,11 @@ function App() {
   const [error, setError] = useState();
 
   useEffect(() => {
-   
     const fetchPlaces = async () => {
-      
       setIsFetching(true);
       try {
         const places = await fetchUserPlaces();
-       
+
         setUserPlaces(places);
       } catch (error) {
         setError({
@@ -92,7 +90,7 @@ function App() {
   function handleError() {
     setErrorUpdatingPlaces(null);
   }
-  
+
   return (
     <>
       <Modal open={errorUpdatingPlaces} onClose={handleError}>
