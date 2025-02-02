@@ -53,6 +53,9 @@ function App() {
     setModalIsOpen(false);
   }, []);
 console.log(errorUpdatingPlaces)
+function handleError() {
+  setErrorUpdatingPlaces(null);
+}
   return (
     <>
       <Modal open={errorUpdatingPlaces}>
@@ -60,6 +63,7 @@ console.log(errorUpdatingPlaces)
         <Error
           title={"An error occured"}
           message={errorUpdatingPlaces.message}
+          onConfirm={handleError}
         />
         ;
       </Modal>
